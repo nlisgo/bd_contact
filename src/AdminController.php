@@ -20,7 +20,7 @@ class AdminController {
     foreach (BdContactStorage::getAll() as $id => $content) {
       // Row with attributes on the row and some of its cells.
       $rows[] = array(
-        'data' => array($id, $content->name, $content->message, l('Delete', "admin/content/bd_contact/delete/$id")),
+        'data' => array(l($id, "admin/content/bd_contact/edit/$id"), $content->name, $content->message, l('Delete', "admin/content/bd_contact/delete/$id")),
       );
     }
 

@@ -12,6 +12,13 @@ bd_contact_add:
   requirements:
     _permission: 'use bd contact form'
 
+bd_contact_edit:
+  path: 'admin/content/bd_contact/edit/{id}'
+  defaults:
+    _form: '\Drupal\bd_contact\AddForm'
+  requirements:
+    _permission: 'use bd contact form'
+
 bd_contact_delete:
   path: 'admin/content/bd_contact/delete/{id}'
   defaults:

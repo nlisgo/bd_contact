@@ -10,6 +10,10 @@ function bd_contact_menu() {
       'title' => 'BD Contact',
       'route_name' => 'bd_contact_add',
     ),
+    'admin/content/bd_contact/edit/%' => array(
+      'title' => 'Edit BD Contact',
+      'route_name' => 'bd_contact_edit',
+    ),
     'admin/content/bd_contact/delete/%' => array(
       'title' => 'Delete BD Contact Submission',
       'route_name' => 'bd_contact_delete',
