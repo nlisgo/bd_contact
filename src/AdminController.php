@@ -2,10 +2,12 @@
 
 namespace Drupal\bd_contact;
 
-class AdminController {
+use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Url;
+
+class AdminController extends ControllerBase {
 
   function content() {
-    $add_link = '<p>' . l(t('New message'), 'admin/content/bd_contact/add') . '</p>';
 
     // Table header.
     $header = array(
@@ -20,7 +22,7 @@ class AdminController {
     foreach (BdContactStorage::getAll() as $id => $content) {
       // Row with attributes on the row and some of its cells.
       $rows[] = array(
-        'data' => array($id, $content->name, $content->message, l('Delete', "admin/content/bd_contact/delete/$id")),
+        'data' => array(\Drupal::l($id, new Url('bd_contact_edit', array('id' => $id))), $content->name, $content->message, \Drupal::l(t('Delete'), new Url('bd_contact_delete', array('id' => $id)))),
       );
     }
 

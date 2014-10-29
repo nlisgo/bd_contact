@@ -3,6 +3,8 @@
 namespace Drupal\bd_contact;
 
 use Drupal\Core\Form\FormInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Component\Utility\String;
 
 class AddForm implements FormInterface {
 
@@ -12,36 +14,51 @@ class AddForm implements FormInterface {
     return 'bd_contact_add';
   }
 
-  function buildForm(array $form, array &$form_state) {
+  function buildForm(array $form, FormStateInterface $form_state, $id = '') {
+    if ($id) {
+      $this->id = $id;
+      $bd_contact = BdContactStorage::get($this->id);
+    }
     $form['name'] = array(
       '#type' => 'textfield',
       '#title' => t('Name'),
+      '#default_value' => isset($bd_contact) ? $bd_contact->name : '',
     );
     $form['message'] = array(
       '#type' => 'textarea',
       '#title' => t('Message'),
+      '#default_value' => isset($bd_contact) ? $bd_contact->message : '',
     );
     $form['actions'] = array('#type' => 'actions');
     $form['actions']['submit'] = array(
       '#type' => 'submit',
-      '#value' => t('Add'),
+      '#value' => ($bd_contact) ? t('Edit') : t('Add'),
     );
     return $form;
   }
 
-  function validateForm(array &$form, array &$form_state) {
+  function validateForm(array &$form, FormStateInterface $form_state) {
     /* Nothing to validate on this form */
   }
 
-  function submitForm(array &$form, array &$form_state) {
-    $name = $form_state['values']['name'];
-    $message = $form_state['values']['message'];
-    BdContactStorage::add(check_plain($name), check_plain($message));
+  function submitForm(array &$form, FormStateInterface $form_state) {
+    $form_values = $form_state->getValues();
 
-    watchdog('bd_contact', 'BD Contact message from %name has been submitted.', array('%name' => $name));
-    drupal_set_message(t('Your message has been submitted'));
-    $form_state['redirect'] = 'admin/content/bd_contact';
-    return;
+    $name = $form_values['name'];
+    $message = $form_values['message'];
+    if (!empty($this->id)) {
+      BdContactStorage::edit($this->id, String::checkPlain($name), String::checkPlain($message));
+
+      \Drupal::logger('bd_contact')->notice('BD Contact message from %name has been edited.', array('%name' => $name));
+      drupal_set_message(t('Your message has been edited'));
+    }
+    else {
+      BdContactStorage::add(String::checkPlain($name), String::checkPlain($message));
+
+      \Drupal::logger('bd_contact')->notice('BD Contact message from %name has been submitted.', array('%name' => $name));
+      drupal_set_message(t('Your message has been submitted'));
+    }
+    $form_state->setRedirect('bd_contact_list');
   }
 
 }

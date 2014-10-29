@@ -1,0 +1,5 @@
+bd_contact_list:
+  route_name: bd_contact_list
+  title: 'BD Contact'
+  base_route: system.admin_content
+  weight: 10

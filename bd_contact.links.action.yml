@@ -1,0 +1,5 @@
+bd_contact.add:
+  route_name: bd_contact_add
+  title: 'New message'
+  appears_on:
+    - bd_contact_list
