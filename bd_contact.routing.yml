@@ -1,6 +1,7 @@
 bd_contact_list:
   path: 'admin/content/bd_contact'
   defaults:
+    _title: BD Contact
     _content: '\Drupal\bd_contact\AdminController::content'
   requirements:
     _permission: 'manage bd contact forms'

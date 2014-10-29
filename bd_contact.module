@@ -1,36 +1,15 @@
 <?php
 
-function bd_contact_menu() {
-  return array(
-    'admin/content/bd_contact' => array(
-      'title' => 'BD Contact Submissions',
-      'route_name' => 'bd_contact_list',
-    ),
-    'admin/content/bd_contact/add' => array(
-      'title' => 'BD Contact',
-      'route_name' => 'bd_contact_add',
-    ),
-    'admin/content/bd_contact/edit/%' => array(
-      'title' => 'Edit BD Contact',
-      'route_name' => 'bd_contact_edit',
-    ),
-    'admin/content/bd_contact/delete/%' => array(
-      'title' => 'Delete BD Contact Submission',
-      'route_name' => 'bd_contact_delete',
-    ),
-  );
-}
-
 /**
  * Implements hook_permission().
  */
 function bd_contact_permission() {
   return array(
     'manage bd contact forms' => array(
-      'title' => t('Manage bd contact form submissions'),
+      'title' => t('Manage BD Contact form submissions'),
     ),
     'use bd contact form' => array(
-      'title' => t('Use the bd contact form'),
+      'title' => t('Use the BD Contact form'),
     ),
   );
 }
